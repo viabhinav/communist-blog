@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <br>
+    <h1 align="middle">{{heading}}</h1><br><br>
+    <p class="lead">{{content}}</p><br><br>
+    {% endblock %}
+{% block heading %}
+    TMC Blog
+{% endblock %}
+{% block item1 %}
+    View All Posts
+{% endblock %}
+{% block item1href %}
+    "/posts"
+{% endblock %}
+{% block item2 %}
+Create Post
+{% endblock %}
+{% block item2href %}
+"/createpost"
+{% endblock %}

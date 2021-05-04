@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+.containerx {
+    height: 175px !important;
+    position: relative !important;
+    border: 2px solid black !important;
+  }
+  .centerx {
+  margin: 0 !important;
+  position: relative !important;
+  top: 50% !important;
+  left: 50% !important;
+}
+  </style>
+    <br>
+    <h1 style="color:black;">{% block title %} View Posts {% endblock %}</h1>
+    <br>
+    <br>
+    {% for post, content in posts %}
+    <div>
+        <div></div>
+    <h5><a href="/post/{{post}}">{{post}}</a></h5>
+    <p class="lead">{{content[0:200]}}...</p><br><br></div>
+    {% endfor %}
+    {% endblock %}
+{% block heading %}
+    TMC Blog
+{% endblock %}
+{% block item1 %}
+    View All Posts
+{% endblock %}
+{% block item1href %}
+    "/posts"
+{% endblock %}
+{% block item2 %}
+Create Post
+{% endblock %}
+{% block item2href %}
+"/createpost"
+{% endblock %}
