@@ -13,6 +13,10 @@
   top: 50% !important;
   left: 50% !important;
 }
+.post0{
+  height:4em; 
+  overflow:hidden;
+}
   </style>
     <br>
     <h1 style="color:black;">{% block title %} View Posts {% endblock %}</h1>
@@ -22,7 +26,8 @@
     <div>
         <div></div>
     <h5><a href="/post/{{post}}">{{post}}</a></h5>
-    <p class="lead">{{content[0:200]|markdown}}...</p><br><br></div>
+    <div class="post0">
+    <p class="lead">{{content[0:200]|markdown}}...</p></div><br><br></div>
     {% endfor %}
     {% endblock %}
 {% block heading %}
