@@ -22,7 +22,7 @@
     <div>
         <div></div>
     <h5><a href="/post/{{post}}">{{post}}</a></h5>
-    <p class="lead">{{content[0:200]}}...</p><br><br></div>
+    <p class="lead">{{content[0:200]|markdown}}...</p><br><br></div>
     {% endfor %}
     {% endblock %}
 {% block heading %}

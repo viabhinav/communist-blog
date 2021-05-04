@@ -3,10 +3,28 @@
 {% block content %}
     <br>
     <h1 align="middle">Edit post</h1><br><br>
+    <link rel="stylesheet" href="/static/editormd/css/editormd.min.css" />
+
     <form action="/edit-post" method="GET">
+    <div id="editor">
+    <!-- Tips: Editor.md can auto append a `<textarea>` tag -->
+    <textarea id="content" name="content" style="display:none;">### Hello Editor.md !</textarea>
+</div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="/static/editormd/editormd.min.js"></script>
+<script type="text/javascript">
+    $(function() {
+        var editor = editormd("editor", {
+            // width: "100%",
+            // height: "100%",
+            markdown: "{{content}}",     // dynamic set Markdown text
+            path : "/static/editormd/lib/"  // Autoload modules mode, codemirror, marked... dependents libs path
+        });
+    });
+</script>
     <input type="hidden" name="oldheading" id="oldheading" value="{{heading}}">
     <p class="lead">Post Heading:    </p><input type="text" id="heading" name="heading" value="{{heading}}"><br>
-    <p class="lead">Post content:    </p><textarea rows=10 cols=25 id="content" name="content">{{content}}</textarea>
+    <p class="lead">Post content:    </p><textarea rows=10 cols=100 id="contexnt" name="contexnt">{{content}}</textarea>
     <br><br><input type="submit">
     </form>
     {% endblock %}
