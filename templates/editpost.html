@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <br>
+    <h1 align="middle">Edit post</h1><br><br>
+    <form action="/edit-post" method="GET">
+    <input type="hidden" name="oldheading" id="oldheading" value="{{heading}}">
+    <p class="lead">Post Heading:    </p><input type="text" id="heading" name="heading" value="{{heading}}"><br>
+    <p class="lead">Post content:    </p><textarea rows=10 cols=25 id="content" name="content">{{content}}</textarea>
+    <br><br><input type="submit">
+    </form>
+    {% endblock %}
+{% block heading %}
+    TMC Blog
+{% endblock %}
+{% block item1 %}
+    View All Posts
+{% endblock %}
+{% block item1href %}
+    "/posts"
+{% endblock %}
+{% block item2 %}
+Create Post
+{% endblock %}
+{% block item2href %}
+"/createpost"
+{% endblock %}
