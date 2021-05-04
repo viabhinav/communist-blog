@@ -3,6 +3,7 @@ import pickledb as dbms
 import random as rand
 from werkzeug.exceptions import abort
 from flaskext.markdown import Markdown as markdown
+from html import unescape as unquote
 
 
 def Reverse(tuples):
@@ -43,7 +44,7 @@ def viewpost(postname):
     try:
         post = postdb.dget("posts", postname)
         print(postdb.dget("posts", postname))
-        return render_template("viewpost.html", content=post, heading=postname)
+        return render_template("viewpost.html", content=unquote(post), heading=unquote(postname))
         postdb.dump()
     except:
         abort(404)
@@ -57,14 +58,14 @@ def new_post():
 def edit_post():
     try:
         heading = request.args.get("heading")
-        return render_template("editpost.html",heading=heading, content=str(postdb.dget("posts",heading)))
+        return render_template("editpost.html",heading=heading, content=unquote(str(postdb.dget("posts",heading)).strip().replace('\n', '\\n').replace('\r', '')))
         postdb.dump()
     except:
         return 'Failure'
 @app.route('/newpost', methods=['GET'])
 def newpost():
     try:
-        postdb.dadd("posts", (str(request.args.get('heading')), str(request.args.get('content'))))
+        postdb.dadd("posts", unquote(str(request.args.get('heading')), str(request.args.get('content'))))
         return redirect('/posts', code=302)
         postdb.dump()
     except Exception as e:
@@ -74,9 +75,9 @@ def newpost():
 @app.route('/edit-post', methods=['GET'])
 def editpost():
     try:
-        postdb.dpop("posts", request.args.get('oldheading'))
-        postdb.dadd("posts", (str(request.args.get('heading')), str(request.args.get('content'))))
-        return redirect('/posts', code=302)
+        postdb.dpop("posts", unquote(request.args.get('oldheading')))
+        postdb.dadd("posts", (str(request.args.get('heading')), str(unquote(request.args.get('content')))))
+        return redirect('/post/'+str(request.args.get('heading')), code=302)
         postdb.dump()
     except KeyError as e:
         print(e)
@@ -86,5 +87,20 @@ def editpost():
 def deletepost(post):
     postdb.dpop("posts", post)
     return redirect('/posts')
+
+@app.route('/upload')
+def upload_file():
+   return render_template('upload.html')
+
+@app.route('/uploader', methods = ['GET', 'POST'])
+def uploadx_file():
+   if request.method == 'POST':
+      f = request.files['file']
+      mimetypes = ['video/3gpp','video/mp4','video/x-matroska','video/quicktime','video/x-flv','image/jpeg','image/bmp','image/svg+xml','image/png','image/tiff']
+      if str(f.mimetype) in mimetypes: 
+          f.save('static/'+(f.filename))
+          return 'file uploaded successfully'
+      else:
+          return str(f.mimetype)+' not allowed'
 
 app.run(host="0.0.0.0", port=1234)
